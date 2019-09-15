@@ -1,32 +1,91 @@
 import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
 import {
+    SafeAreaView,
     Image,
     Platform,
     ScrollView,
     StyleSheet,
+    FlatList,
     Text,
     TouchableOpacity,
     View,
+    Dimensions,
 } from 'react-native';
 
-import { MonoText } from '../components/StyledText';
+const DATA = [
+   {
+        "friends": [
+          "David Bauer"
+        ],
+        "id": 1,
+        "name": "egg1",
+        "price": "1.03"
+      },
+      {
+        "friends": [
+          "Matt Oakley"
+        ],
+        "id": 2,
+        "name": "egg2",
+        "price": "1.03"
+      },
+      {
+        "friends": [
+          "Matt Oakley"
+        ],
+        "id": 3,
+        "name": "egg3",
+        "price": "1.03"
+      },
+      {
+        "friends": [],
+        "id": 4,
+        "name": "egg4",
+        "price": "1.03"
+      },
+      {
+        "friends": [],
+        "id": 5,
+        "name": "Tax",
+        "price": "4.00"
+      },
+      {
+        "friends": [],
+        "id": 6,
+        "name": "Subtotal",
+        "price": "20.00"
+      }
+ ]
+
+ function Item({ data }) {
+   return (
+     <View style={styles.item}>
+       <Text style={styles.title}>{data.name}</Text>
+       <Text style={styles.title}>{data.price}</Text>
+       <Text style={styles.title}>{data.friends}</Text>
+     </View>
+   );
+ }
 
 export default class HomeScreen extends React.Component{
     state = {};
-    
+
     render() {
-        return (
-        <View style={styles.container}>
-    
-
-        <View style={styles.topcontainer}>
-        <DevelopmentModeNotice />
+      return (
+        <View>
+          <DevelopmentModeNotice />
+          <FlatList
+            contentContainerStyle={{margin:3}}
+            horizontal={false}
+            data={DATA}
+            renderItem={({ item }) => <Item data={item} />}
+            keyExtractor={item => item.id}
+          />
         </View>
+      )
 
-
-        </View>
-    )};
+    };
 }
 
 HomeScreen.navigationOptions = {
@@ -36,7 +95,7 @@ HomeScreen.navigationOptions = {
 function DevelopmentModeNotice() {
     if (__DEV__) {
         const refreshButton = (
-            <Text onPress={handleRefreshPress} style={styles.helpLinkText}>
+            <Text onPress={handleRefreshPress} style={styles.topcontainer}>
             Refresh
             </Text>
         );
@@ -56,9 +115,48 @@ function DevelopmentModeNotice() {
 }
 
 function handleRefreshPress() {
-    WebBrowser.openBrowserAsync(
-        'https://docs.expo.io/versions/latest/workflow/development-mode/'
-    );
+    this.state = [{
+        "friends": [
+          "David Bauer"
+        ],
+        "id": 1,
+        "name": "egg1",
+        "price": "1.03"
+      },
+      {
+        "friends": [
+          "Matt Oakley"
+        ],
+        "id": 2,
+        "name": "egg2",
+        "price": "1.03"
+      },
+      {
+        "friends": [
+          "Matt Oakley"
+        ],
+        "id": 3,
+        "name": "egg3",
+        "price": "1.03"
+      },
+      {
+        "friends": [],
+        "id": 4,
+        "name": "egg4",
+        "price": "1.03"
+      },
+      {
+        "friends": [],
+        "id": 5,
+        "name": "Tax",
+        "price": "4.00"
+      },
+      {
+        "friends": [],
+        "id": 6,
+        "name": "Subtotal",
+        "price": "20.00"
+      }];
 }
 
 function handleHelpPress() {
@@ -155,7 +253,16 @@ const styles = StyleSheet.create({
         color: '#2e78b7',
     },
     topcontainer: {
-      marginTop: 30,
+      height: 60,
       textAlign: 'left',
+      fontSize: 14,
+      color: '#2e78b7',
+    },
+    item: {
+      flexDirection: 'row',
+    },
+    title: {
+      width: Dimensions.get('window').width/3,
+      fontSize: 20,
     },
 });

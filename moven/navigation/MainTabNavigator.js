@@ -92,10 +92,9 @@ ListStack.navigationOptions = {
 };
 
 const tabNavigator = createBottomTabNavigator({
-  HomeStack,
   LinksStack,
-  SettingsStack,
   ListStack,
+  SettingsScreen,
 });
 
 tabNavigator.path = '';
