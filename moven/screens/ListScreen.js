@@ -15,56 +15,13 @@ import { MonoText } from '../components/StyledText';
 export default function HomeScreen() {
     return (
         <View style={styles.container}>
-        <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.contentContainer}>
-        <View style={styles.welcomeContainer}>
-        <Image
-        source={
-            __DEV__
-            ? require('../assets/images/robot-dev.png')
-            : require('../assets/images/robot-prod.png')
-        }
-        style={styles.welcomeImage}
-        />
-        </View>
 
-        <View style={styles.getStartedContainer}>
+        <View style={styles.topcontainer}>
         <DevelopmentModeNotice />
-
-        <Text style={styles.getStartedText}>Moven</Text>
-
-        <View
-        style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-        <MonoText>----</MonoText>
         </View>
 
-        <Text style={styles.getStartedText}>
-        -------
-        </Text>
-        </View>
+        
 
-        <View style={styles.helpContainer}>
-        <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
-        <Text style={styles.helpLinkText}>
-        Help, it didn’t automatically reload!
-        </Text>
-        </TouchableOpacity>
-        </View>
-        </ScrollView>
-
-        <View style={styles.tabBarInfoContainer}>
-        <Text style={styles.tabBarInfoText}>
-        This is a tab bar. You can edit it in:
-        </Text>
-
-        <View
-        style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-        <MonoText style={styles.codeHighlightText}>
-        navigation/MainTabNavigator.js
-        </MonoText>
-        </View>
-        </View>
         </View>
     );
 }
@@ -75,28 +32,27 @@ HomeScreen.navigationOptions = {
 
 function DevelopmentModeNotice() {
     if (__DEV__) {
-        const learnMoreButton = (
-            <Text onPress={handleLearnMorePress} style={styles.helpLinkText}>
-            Learn more
+        const refreshButton = (
+            <Text onPress={handleRefreshPress} style={styles.helpLinkText}>
+            Refresh
             </Text>
         );
 
         return (
             <Text style={styles.developmentModeText}>
-            Development mode is enabled: your app will be slower but you can use
-            useful development tools. {learnMoreButton}
+            {refreshButton}
             </Text>
         );
     } else {
         return (
             <Text style={styles.developmentModeText}>
-            You are not in development mode: your app will run at full speed.
+            Error with refresh
             </Text>
         );
     }
 }
 
-function handleLearnMorePress() {
+function handleRefreshPress() {
     WebBrowser.openBrowserAsync(
         'https://docs.expo.io/versions/latest/workflow/development-mode/'
     );
@@ -194,5 +150,9 @@ const styles = StyleSheet.create({
     helpLinkText: {
         fontSize: 14,
         color: '#2e78b7',
+    },
+    topcontainer: {
+      marginTop: 30,
+      textAlign: 'left',
     },
 });
