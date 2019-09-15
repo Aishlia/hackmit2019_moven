@@ -26,6 +26,14 @@ takePicture = () => {
     }
   };
 
+onPictureSaved = async photo => {
+    await FileSystem.moveAsync({
+      from: photo.uri,
+      to: `${FileSystem.documentDirectory}photos/${Date.now()}.jpg`,
+    });
+    this.setState({ newPhotos: true });
+  }
+
   render() {
     const { hasCameraPermission } = this.state;
     if (hasCameraPermission === null) {
@@ -51,7 +59,7 @@ takePicture = () => {
                 style={{
                   flex: 0.1,
                   alignSelf: 'flex-end',
-                  alignItems: 'center',
+                  textAlign: 'center',
                 }}
           /*
                 onPress={() => {
