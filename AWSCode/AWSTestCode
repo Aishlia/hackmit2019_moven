@@ -1,0 +1,33 @@
+#Analyzes text in a document stored in an S3 bucket. 
+import boto3
+import io
+from io import BytesIO
+import sys
+import requests
+
+def get_next():
+    req = requests.get('https://7wese810h4.execute-api.us-east-2.amazonaws.com/default/ReciptIdentification')
+    if req.status_code != 200:
+        raise RuntimeError('request failed! ({})'.format(req.status_code))
+    return req.json()
+	
+	
+#Create an S3 client
+s3 = boto3.client('s3')
+
+filename = 'ReciptFolder/julia1.jpg'
+bucket_name = 'reciptbucket'
+
+s3.upload_file(filename, bucket_name, 'recipt3.jpg')
+
+rec1 = get_next()
+
+filename = 'ReciptFolder/julia3.jpg'
+
+s3.upload_file(filename, bucket_name, 'recipt3.jpg')
+
+rec2 = get_next()
+
+print(rec1)
+
+print(rec2)
