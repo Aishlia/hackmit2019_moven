@@ -12,18 +12,21 @@ import {
 
 import { MonoText } from '../components/StyledText';
 
-export default function HomeScreen() {
-    return (
+export default class HomeScreen extends React.Component{
+    state = {};
+    
+    render() {
+        return (
         <View style={styles.container}>
+    
 
         <View style={styles.topcontainer}>
         <DevelopmentModeNotice />
         </View>
 
-        
 
         </View>
-    );
+    )};
 }
 
 HomeScreen.navigationOptions = {
