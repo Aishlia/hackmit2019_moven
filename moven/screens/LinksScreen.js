@@ -2,19 +2,29 @@ import React from 'react';
 // import { ScrollView, StyleSheet } from 'react-native';
 // import { ExpoLinksView } from '@expo/samples';
 
-import { Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
+import { Constants } from 'expo';
 
 export default class CameraExample extends React.Component {
   state = {
     hasCameraPermission: null,
-    type: Camera.Constants.Type.back,
+    ratio: '16:9',
+    ratios: [],
+    type: 'back',
   };
-  async componentDidMount() {
+
+async componentDidMount() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
     this.setState({ hasCameraPermission: status === 'granted' });
   }
+
+takePicture = () => {
+    if (this.camera) {
+      this.camera.takePictureAsync({ onPictureSaved: this.onPictureSaved });
+    }
+  };
 
   render() {
     const { hasCameraPermission } = this.state;
@@ -25,7 +35,12 @@ export default class CameraExample extends React.Component {
     } else {
       return (
         <View style={{ flex: 1 }}>
-          <Camera style={{ flex: 1 }} type={this.state.type}>
+          <Camera 
+          ref={ref => {
+             this.camera = ref;
+             }}
+          style={{ flex: 1 }} 
+          type={this.state.type}>
             <View
               style={{
                 flex: 1,
@@ -38,6 +53,7 @@ export default class CameraExample extends React.Component {
                   alignSelf: 'flex-end',
                   alignItems: 'center',
                 }}
+          /*
                 onPress={() => {
                   this.setState({
                     type:
@@ -45,8 +61,9 @@ export default class CameraExample extends React.Component {
                         ? Camera.Constants.Type.front
                         : Camera.Constants.Type.back,
                   });
-                }}>
-                <Text style={{ fontSize: 18, marginBottom: 10, color: 'white' }}> Flip </Text>
+                  */
+          onPress={this.takePicture}>
+                <Text style={{ fontSize: 18, marginBottom: 10, color: 'white' }}> Take Pic </Text>
               </TouchableOpacity>
             </View>
           </Camera>
@@ -72,10 +89,31 @@ export default class CameraExample extends React.Component {
 //   title: 'Split Receipt',
 // };
 //
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     paddingTop: 15,
-//     backgroundColor: '#fff',
-//   },
-// });
+//const styles = StyleSheet.create({
+//});
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  camera: {
+    flex: 1,
+    justifyContent: 'space-between',
+  },
+  noPermissions: {
+    flex: 1,
+    alignItems:'center',
+    justifyContent: 'center',
+    padding: 10,
+  },
+  newPhotosDot: {
+    position: 'absolute',
+    top: 0,
+    right: -5,
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: '#4630EB'
+  },
+});
