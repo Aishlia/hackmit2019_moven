@@ -1,4 +1,5 @@
 import React from 'react';
+import {Image} from 'react-native';
 // import { ScrollView, StyleSheet } from 'react-native';
 // import { ExpoLinksView } from '@expo/samples';
 
@@ -6,6 +7,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
 import { Constants } from 'expo';
+//import {moveAsync, documentDirectory} from 'expo-file-system';
 
 export default class CameraExample extends React.Component {
   state = {
@@ -20,18 +22,20 @@ async componentDidMount() {
     this.setState({ hasCameraPermission: status === 'granted' });
   }
 
-takePicture = () => {
+getRatios = async () => {
+    const ratios = await this.camera.getSupportedRatios();
+    return ratios;
+  };
+
+ takePicture = async () => {
     if (this.camera) {
-      this.camera.takePictureAsync({ onPictureSaved: this.onPictureSaved });
+      const photo = await this.camera.takePictureAsync({base64: true});
+      this.onPictureSaved(photo);
     }
   };
 
 onPictureSaved = async photo => {
-    await FileSystem.moveAsync({
-      from: photo.uri,
-      to: `${FileSystem.documentDirectory}photos/${Date.now()}.jpg`,
-    });
-    this.setState({ newPhotos: true });
+    this.setState({photo})
   }
 
   render() {
@@ -40,6 +44,8 @@ onPictureSaved = async photo => {
       return <View />;
     } else if (hasCameraPermission === false) {
       return <Text>No access to camera</Text>;
+    } else if (this.state.photo) {
+        return <Image source={{uri: this.state.photo.uri}}></Image>;
     } else {
       return (
         <View style={{ flex: 1 }}>
@@ -61,15 +67,6 @@ onPictureSaved = async photo => {
                   alignSelf: 'flex-end',
                   textAlign: 'center',
                 }}
-          /*
-                onPress={() => {
-                  this.setState({
-                    type:
-                      this.state.type === Camera.Constants.Type.back
-                        ? Camera.Constants.Type.front
-                        : Camera.Constants.Type.back,
-                  });
-                  */
           onPress={this.takePicture}>
                 <Text style={{ fontSize: 18, marginBottom: 10, color: 'white' }}> Take Pic </Text>
               </TouchableOpacity>
