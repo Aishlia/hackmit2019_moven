@@ -3,6 +3,10 @@ from flask import Flask, jsonify, make_response, abort, request
 
 app = Flask(__name__)
 
+@app.route("/")
+def home():
+    return "Moven"
+
 tasks = [
     {
         'id': 1,
@@ -38,7 +42,7 @@ def get_task(task_id):
     task = [task for task in tasks if task['id'] == task_id]
     if len(task) == 0:
         abort(404)
-    return jsonify({'task': task[0]})
+    return jsonify({'task': task[task_id-1]})
 
 # Print out all elements
 @app.route('/todo/api/v1.0/tasks', methods=['GET'])
