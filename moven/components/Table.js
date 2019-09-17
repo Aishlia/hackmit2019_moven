@@ -5,50 +5,7 @@ class Table extends Component {
    constructor(props) {
       super(props) //since we are extending class Table so we have to use super in order to override Component class constructor
       this.state = { //state is by default an object
-         items: [
-           {
-                "friends": [
-                  "David Bauer"
-                ],
-                "id": 1,
-                "name": "egg1",
-                "price": "1.03"
-              },
-              {
-                "friends": [
-                  "Matt Oakley"
-                ],
-                "id": 2,
-                "name": "egg2",
-                "price": "1.03"
-              },
-              {
-                "friends": [
-                  "Matt Oakley"
-                ],
-                "id": 3,
-                "name": "egg3",
-                "price": "1.03"
-              },
-              {
-                "friends": [],
-                "id": 4,
-                "name": "egg4",
-                "price": "1.03"
-              },
-              {
-                "friends": [],
-                "id": 5,
-                "name": "Tax",
-                "price": "4.00"
-              },
-              {
-                "friends": [],
-                "id": 6,
-                "name": "Subtotal",
-                "price": "20.00"
-              }
-         ]
+         items:
       }
    }
 
@@ -75,7 +32,7 @@ class Table extends Component {
       render() {
          return (
             <div>
-               <h1 id='title'> <Text> React Dynamic Table </Text> </h1>
+               <Text> React Dynamic Table </Text>
                <table id='students'>
                   <tbody>
                      <tr>{this.renderTableHeader()}</tr>

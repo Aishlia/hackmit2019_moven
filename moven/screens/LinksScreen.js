@@ -29,8 +29,8 @@ getRatios = async () => {
 
  takePicture = async () => {
     if (this.camera) {
-      const photo = await this.camera.takePictureAsync({base64: true});
-      this.onPictureSaved(photo);
+      //const photo = await this.camera.takePictureAsync({base64: true});
+      //this.onPictureSaved(photo);
     }
   };
 
@@ -48,18 +48,20 @@ onPictureSaved = async photo => {
         return <Image source={{uri: this.state.photo.uri}}></Image>;
     } else {
       return (
-        <View style={{ flex: 1 }}>
-          <Camera 
+        <View style={{ flex: 1 , textAlign: 'center'}}>
+          <Camera
           ref={ref => {
              this.camera = ref;
              }}
-          style={{ flex: 1 }} 
+          style={{ flex: 1 }}
           type={this.state.type}>
             <View
               style={{
                 flex: 1,
                 backgroundColor: 'transparent',
                 flexDirection: 'row',
+                textAlign: 'center',
+                justifyContent: 'center',
               }}>
               <TouchableOpacity
                 style={{
@@ -68,7 +70,7 @@ onPictureSaved = async photo => {
                   textAlign: 'center',
                 }}
           onPress={this.takePicture}>
-                <Text style={{ fontSize: 18, marginBottom: 10, color: 'white' }}> Take Pic </Text>
+                <Text style={{ fontSize: 18, marginBottom: 10, color: 'white', textAlign:'center' }}> Take Pic </Text>
               </TouchableOpacity>
             </View>
           </Camera>
